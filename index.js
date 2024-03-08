@@ -11,10 +11,6 @@ console.log('--- TP-LINK LIGHTBULB HTTP ---\n\n')
 
 //console.log(__dirname)
 
-//light.info().then((info) => {
-//    console.log(info)
-//})
-
 function fileWrite(file, content) {
     console.log(content)
     if (!writeToFile) return
@@ -135,6 +131,26 @@ app.get('/light/brightness/100', (_, res) => {
         .catch((err) => {
             console.error(err)
             content = 'Error: Brightness 100%'
+            fileWrite(statusFile, content)
+            res.send(content)
+        })
+})
+
+// Light details
+
+app.get('/light/details', (_, res) => {
+    content = ''
+    light
+        .info()
+        .then((info) => {
+            console.log(info)
+            content = 'Details'
+            fileWrite(statusFile, content)
+            res.json(info).send()
+        })
+        .catch((err) => {
+            console.error(err)
+            content = 'Error: Details'
             fileWrite(statusFile, content)
             res.send(content)
         })
