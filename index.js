@@ -99,13 +99,13 @@ app.get('/light/brightness/50', (_, res) => {
         })
         .then((status) => {
             //console.log(status)
-            content = 'Brightness to 50%'
+            content = 'Brightness 50%'
             fileWrite(statusFile, content)
             res.send(content)
         })
         .catch((err) => {
             console.error(err)
-            content = 'Error: Brightness to 50%'
+            content = 'Error: Brightness 50%'
             fileWrite(statusFile, content)
             res.send(content)
         })
@@ -124,13 +124,13 @@ app.get('/light/brightness/100', (_, res) => {
         })
         .then((status) => {
             //console.log(status)
-            content = 'Brightness to 100%'
+            content = 'Brightness 100%'
             fileWrite(statusFile, content)
             res.send(content)
         })
         .catch((err) => {
             console.error(err)
-            content = 'Error: Brightness to 100%'
+            content = 'Error: Brightness 100%'
             fileWrite(statusFile, content)
             res.send(content)
         })
