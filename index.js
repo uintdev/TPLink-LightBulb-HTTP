@@ -36,6 +36,8 @@ app.get('/', (_, res) => {
 
 let content = ''
 
+// Light toggle states
+
 app.get('/light/on', (_, res) => {
     content = ''
     light
@@ -85,6 +87,8 @@ app.get('/light/off', (_, res) => {
             res.send(content)
         })
 })
+
+// Light brightness level
 
 app.get('/light/brightness/50', (_, res) => {
     content = ''
