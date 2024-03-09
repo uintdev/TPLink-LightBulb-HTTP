@@ -8,10 +8,10 @@ The communication is handled using the [tplink-lightbulb](https://github.com/kon
 
 This allows for the following actions:
 
--   Light On
+-   Light on
     -   GET
     -   /light/on
--   Light Off
+-   Light off
     -   GET
     -   /light/off
 -   Light brightness to 100
@@ -20,6 +20,9 @@ This allows for the following actions:
 -   Light brightness to 50
     -   GET
     -   /light/brightness/50
+-   Light details
+    -   GET
+    -   /light/details
 
 ## Configuration
 
