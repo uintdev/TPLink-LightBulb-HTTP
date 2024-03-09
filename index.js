@@ -9,8 +9,6 @@ const light = new TPLSmartDevice(hostname)
 
 console.log('--- TP-LINK LIGHTBULB HTTP ---\n\n')
 
-//console.log(__dirname)
-
 function fileWrite(file, content) {
     console.log(content)
     if (!writeToFile) return
