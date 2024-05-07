@@ -4,19 +4,36 @@ const TPLSmartDevice = require('tplink-lightbulb')
 const hostname = '192.168.2.11'
 const port = 8080
 const statusFile = __dirname + '/../SSD1306-Display-SysInfo/msg.txt'
+const displayOffFile = __dirname + '/../SSD1306-Display-SysInfo/displayoff'
 writeToFile = true
 const light = new TPLSmartDevice(hostname)
 
 console.log('--- TP-LINK LIGHTBULB HTTP ---\n\n')
 
-function fileWrite(file, content) {
+function fileStatusWrite(content) {
     console.log(content)
     if (!writeToFile) return
 
-    fs.writeFileSync(file, 'Light: ' + content, {
+    fs.writeFileSync(statusFile, 'Light: ' + content, {
         encoding: 'utf8',
         flag: 'w',
     })
+}
+
+function fileDisplayOff(displayOff) {
+    let fileDisplayOffExists = fs.existsSync(displayOffFile)
+    if (displayOff) {
+        if (!fileDisplayOffExists) {
+            fs.writeFileSync(displayOffFile, '', {
+                encoding: 'utf8',
+                flag: 'w',
+            })
+        }
+    } else {
+        if (fileDisplayOffExists) {
+            fs.unlinkSync(displayOffFile)
+        }
+    }
 }
 
 const express = require('express')
@@ -46,13 +63,13 @@ app.get('/light/on', (_, res) => {
         .then((status) => {
             //console.log(status)
             content = 'On'
-            fileWrite(statusFile, content)
+            fileStatusWrite(content)
             res.send(content)
         })
         .catch((err) => {
             console.error(err)
             content = 'Error: Turning light on'
-            fileWrite(statusFile, content)
+            fileStatusWrite(content)
             res.send(content)
         })
 })
@@ -71,13 +88,13 @@ app.get('/light/off', (_, res) => {
         .then((status) => {
             //console.log(status)
             content = 'Off'
-            fileWrite(statusFile, content)
+            fileStatusWrite(content)
             res.send(content)
         })
         .catch((err) => {
             console.error(err)
             content = 'Error: Turning light off'
-            fileWrite(statusFile, content)
+            fileStatusWrite(content)
             res.send(content)
         })
 })
@@ -98,13 +115,13 @@ app.get('/light/brightness/50', (_, res) => {
         .then((status) => {
             //console.log(status)
             content = 'Brightness 50%'
-            fileWrite(statusFile, content)
+            fileStatusWrite(content)
             res.send(content)
         })
         .catch((err) => {
             console.error(err)
             content = 'Error: Brightness 50%'
-            fileWrite(statusFile, content)
+            fileStatusWrite(content)
             res.send(content)
         })
 })
@@ -123,13 +140,13 @@ app.get('/light/brightness/100', (_, res) => {
         .then((status) => {
             //console.log(status)
             content = 'Brightness 100%'
-            fileWrite(statusFile, content)
+            fileStatusWrite(content)
             res.send(content)
         })
         .catch((err) => {
             console.error(err)
             content = 'Error: Brightness 100%'
-            fileWrite(statusFile, content)
+            fileStatusWrite(content)
             res.send(content)
         })
 })
@@ -143,19 +160,33 @@ app.get('/light/details', (_, res) => {
         .then((info) => {
             console.log(info)
             content = 'Details'
-            fileWrite(statusFile, content)
+            fileStatusWrite(content)
             res.json(info).send()
         })
         .catch((err) => {
             console.error(err)
             content = 'Error: Details'
-            fileWrite(statusFile, content)
+            fileStatusWrite(content)
             res.send(content)
         })
 })
 
+// Display controls
+
+app.get('/display/on', (_, res) => {
+    content = 'Display: on'
+    fileDisplayOff(false)
+    res.send(content)
+})
+
+app.get('/display/off', (_, res) => {
+    content = 'Display: off'
+    fileDisplayOff(true)
+    res.send(content)
+})
+
 app.listen(app.get('port'), function () {
     content = 'Server started'
-    fileWrite(statusFile, content)
+    fileStatusWrite(content)
     console.log('Listening on port ' + app.get('port'))
 })

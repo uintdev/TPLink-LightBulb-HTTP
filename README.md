@@ -8,6 +8,8 @@ The communication is handled using the [tplink-lightbulb](https://github.com/kon
 
 This allows for the following actions:
 
+### Light actions
+
 -   Light on
     -   GET
     -   /light/on
@@ -24,6 +26,15 @@ This allows for the following actions:
     -   GET
     -   /light/details
 
+### Display actions (refer to displayOffFile variable info)
+
+-   Display on
+    -   GET
+    -   /display/on
+-   Display off
+    -   GET
+    -   /display/off
+
 ## Configuration
 
 ### Installing dependencies
@@ -38,9 +49,10 @@ npm install
 
 There are values of variables that you may need to adjust (especially the IP address of the lightbulb).
 
-| Variable    | Description                                                                                                               |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------- |
-| hostname    | IP address of TP-Link light bulb                                                                                          |
-| port        | Port number of the HTTP server that the script would be hosting                                                           |
-| writeToFile | Output last action status to file                                                                                         |
-| statusFile  | Path to last action status file -- mainly intended to use with SSD1306-Display-SysInfo to display the status on a display |
+| Variable       | Description                                                                                                        |
+| -------------- | ------------------------------------------------------------------------------------------------------------------ |
+| hostname       | IP address of TP-Link light bulb                                                                                   |
+| port           | Port number of the HTTP server that the script would be hosting                                                    |
+| writeToFile    | Output last action status to file                                                                                  |
+| statusFile     | Path to last action status file -- intended to use with SSD1306-Display-SysInfo to display the status on a display |
+| displayOffFile | Path to display off file -- intended to use with SSD1306-Display-SysInfo to control the display visibility         |
